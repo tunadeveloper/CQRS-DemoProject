@@ -1,4 +1,5 @@
-﻿using CQRS_DemoProject.CQRSDesignPattern.Handlers.CategoryHandlers;
+﻿using CQRS_DemoProject.CQRSDesignPattern.Commands.CategoryCommands;
+using CQRS_DemoProject.CQRSDesignPattern.Handlers.CategoryHandlers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRS_DemoProject.Controllers
@@ -20,9 +21,30 @@ namespace CQRS_DemoProject.Controllers
             _updateCategoryCommandHandler = updateCategoryCommandHandler;
         }
 
-        public IActionResult Index()
+        public IActionResult CategoryList()
         {
+            var values = _getCategoryQueryHandler.Handle();
+            return View(values);
+        }
+
+        [HttpGet]
+        public IActionResult CreateCategory()
+        {
+            
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateCategory(CreateCategoryCommand command)
+        {
+            _createCategoryCommandHandler.Handle(command);
+            return RedirectToAction("CategoryList");
+        }
+
+        public IActionResult RemoveCategory(int id)
+        {
+           // _removeCategoryCommandHandler.Handle(new RemoveCategoryCommand { CategoryID = id });
+            return RedirectToAction("CategoryList");
         }
     }
 }
