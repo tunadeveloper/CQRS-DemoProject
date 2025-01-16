@@ -1,5 +1,6 @@
 ﻿using CQRS_DemoProject.CQRSDesignPattern.Commands.CategoryCommands;
 using CQRS_DemoProject.CQRSDesignPattern.Handlers.CategoryHandlers;
+using CQRS_DemoProject.CQRSDesignPattern.Queries.CategoryQueries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRS_DemoProject.Controllers
@@ -43,7 +44,21 @@ namespace CQRS_DemoProject.Controllers
 
         public IActionResult RemoveCategory(int id)
         {
-           // _removeCategoryCommandHandler.Handle(new RemoveCategoryCommand { CategoryID = id });
+           _removeCategoryCommandHandler.Handle(new RemoveCategoryCommand(id));
+            return RedirectToAction("CategoryList");
+        }
+
+        [HttpGet]
+        public IActionResult UpdateCategory(int id)
+        {
+            var value = _getCategoryByIdQueryHandler.Handle(new GetCategoryByIdQuery(id));
+            return View(value);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCategory(UpdateCategoryCommand command)
+        {
+            _updateCategoryCommandHandler.Handle(command);
             return RedirectToAction("CategoryList");
         }
     }

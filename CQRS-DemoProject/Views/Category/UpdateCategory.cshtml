@@ -1,0 +1,17 @@
+﻿@model CQRS_DemoProject.CQRSDesignPattern.Results.CategoryResults.GetCategoryByIdQueryResult
+@{
+    Layout = null;
+}
+<link href="\lib\bootstrap\dist\css\bootstrap.min.css" rel="stylesheet" />
+<div class="container">
+    <br />
+    <br />
+    <form method="post">
+        <input type="hidden" asp-for="CategoryID" />
+
+        <label>Kategori Adı</label>
+        <input type="type" asp-for="CategoryName" />
+        <br />
+        <button type="submit">Kaydet</button>
+    </form>
+</div>
