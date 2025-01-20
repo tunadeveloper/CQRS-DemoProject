@@ -1,4 +1,6 @@
-﻿using CQRS_DemoProject.CQRSDesignPattern.Handlers.ProductHandlers;
+﻿using CQRS_DemoProject.CQRSDesignPattern.Commands.ProductCommands;
+using CQRS_DemoProject.CQRSDesignPattern.Handlers.ProductHandlers;
+using CQRS_DemoProject.CQRSDesignPattern.Queries.ProductQueries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRS_DemoProject.Controllers
@@ -20,9 +22,43 @@ namespace CQRS_DemoProject.Controllers
             _getProductQueryHandler = getProductQueryHandler;
         }
 
-        public IActionResult Index()
+        public IActionResult ProductList()
+        {
+            var values = _getProductQueryHandler.Handle();
+            return View(values);
+        }
+
+        [HttpGet]
+        public IActionResult CreateProduct()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateProduct(CreateProductCommand command)
+        {
+            _createProductCommandHandler.Handle(command);
+            return RedirectToAction("ProductList");
+        }
+
+        public IActionResult RemoveProduct(int id)
+        {
+            _removeProductCommandHandler.Handle(new RemoveProductCommand(id));
+            return RedirectToAction("ProductList");
+        }
+
+        [HttpGet]
+        public IActionResult UpdateProduct(int id)
+        {
+            var value = _getProductByIdQueryHandler.Handle(new GetProductByIdQuery(id));
+            return View(value);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProduct(UpdateProductCommand command)
+        {
+            _updateProductCommandHandler.Handle(command);
+            return RedirectToAction("ProductList");
         }
     }
 }
