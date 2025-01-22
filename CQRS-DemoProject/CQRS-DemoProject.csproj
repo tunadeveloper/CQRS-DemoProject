@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="MediatorDesignPattern\Handlers\" />
-    <Folder Include="MediatorDesignPattern\Queries\" />
   </ItemGroup>
 
 </Project>
