@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using CQRS_DemoProject.MediatorDesignPattern.Results;
+using MediatR;
 
 namespace CQRS_DemoProject.MediatorDesignPattern.Queries
 {
-    public class GetCustomerByIdQuery : IRequest<GetCustomerByIdQuery>
+    public class GetCustomerByIdQuery : IRequest<GetCustomerByIdQueryResult>
     {
         public int CustomerID { get; set; }
 

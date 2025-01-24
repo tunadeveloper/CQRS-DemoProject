@@ -1,0 +1,29 @@
+﻿@model List<CQRS_DemoProject.MediatorDesignPattern.Results.GetCustomerQueryResult>
+@{
+    Layout = null;
+}
+
+<link href="\lib\bootstrap\dist\css\bootstrap.min.css" rel="stylesheet" />
+<div class="container">
+    <br />
+    <br />
+    <table class="table table-hover">
+        <tr>
+            <th>#</th>
+            <th>Müşteri Adı & Soyadı</th>
+            <th>Sil</th>
+            <th>Güncelle</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CustomerID</td>
+                <td>@item.CustomerID @item.CustomerSurname</td>
+                <td><a href="/Customer/DeleteCustomer/@item.CustomerID" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Customer/UpdateCustomer/@item.CustomerID" class="btn btn-success">Güncelle</a></td>
+            </tr>
+        }
+    </table>
+    <a href="/Customer/CreateCustomer/" class="btn btn-primary">Yeni Müşteri Ekle</a>
+</div>
